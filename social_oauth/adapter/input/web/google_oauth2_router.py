@@ -6,6 +6,7 @@ from config.redis_config import get_redis
 from social_oauth.application.usecase.google_oauth2_usecase import GoogleOAuth2UseCase
 from social_oauth.infrastructure.service.google_oauth2_service import GoogleOAuth2Service
 
+# 여기 instance방식으로 분리 ?
 authentication_router = APIRouter()
 service = GoogleOAuth2Service()
 usecase = GoogleOAuth2UseCase(service)
@@ -18,7 +19,11 @@ async def redirect_to_google():
     print("[DEBUG] Redirecting to Google:", url)
     return RedirectResponse(url)
 
-
+#google에 요청이날아감
+#그런데 google cloud에 가서 redirect uri에 설정해 놓은것이있음.
+# 로그인이 완료된 순간 알아서 google cloud에 등록한 redirect uri로 이동함
+# 근데 그 주소가 우리는 localhost : 33333/authentication/google/redirect 였음.
+# 그렇기 때문에 구글 로그인이 성공하면 아래 Controller (router) 가 동작하게 되있음
 @authentication_router.get("/google/redirect")
 async def process_google_redirect(
     response: Response,
@@ -47,7 +52,7 @@ async def process_google_redirect(
         key="session_id",
         value=session_id,
         httponly=True,
-        secure=False,
+        secure=True,
         samesite="none",
         max_age=3600
     )

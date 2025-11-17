@@ -4,7 +4,9 @@ from datetime import datetime
 
 from config.database.session import Base
 
-
+#Entity
+#orm 붙어있는 것은
+# 실제 Layered Architecture에서는 entity 에 해당함
 class AnonymousBoardORM(Base):
     __tablename__ = "anonymous_board"
 
