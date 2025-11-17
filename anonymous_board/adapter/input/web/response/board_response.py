@@ -1,8 +1,9 @@
 from pydantic import BaseModel
 from datetime import datetime
 
-class AnonymousBoardResponse(BaseModel):
+class BoardResponse(BaseModel):
     id: int
+    userid: str
     title: str
     content: str
     created_at: datetime
