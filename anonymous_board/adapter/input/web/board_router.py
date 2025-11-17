@@ -7,7 +7,7 @@ from anonymous_board.adapter.input.web.response.board_response import BoardRespo
 from anonymous_board.application.usecase.board_usecase import BoardUseCase
 from anonymous_board.infrastructure.repository.board_repository_impl import BoardRepositoryImpl
 
-board_router = APIRouter
+board_router = APIRouter()
 
 usecase = BoardUseCase(BoardRepositoryImpl)
 
