@@ -47,6 +47,10 @@ jobs:
     runs-on: [self-hosted, fastapi-server]
 
     steps:
+      # ✅ 1) 레포 코드 가져오기 (이 블록 추가)
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
       # GHCR 로그인
       - name: GHCR Login
         run: echo ${{ secrets.GHCR_TOKEN }} | docker login ghcr.io -u ${{ secrets.REPO_USER }} --password-stdin
@@ -58,7 +62,7 @@ jobs:
       # 기존 컨테이너 중지 및 정리
       - name: Stop old container
         run: |
-          docker-compose down
+          docker-compose down || true   # 👈 여기서 || true 추가
           docker image prune -f
           docker logout
 
